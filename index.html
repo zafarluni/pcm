@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#07091C">
+    <meta name="description" content="Legacy Pac-Man - A retro arcade experience">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Pac-Man">
+    <link rel="manifest" href="/assets/manifest-BItekTGg.json">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAA7AAAAOwBeShxvQAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAGRSURBVFiF7ZY9TsMwGIafO0pqYGJgYGRkYuQNeAbegrEz38Ab8A68AW/AyMgL0NhYWRgYEhK0TYrEdRzHQeLQuE5S6CRKkeNc9u/+O44b/xgK4K0Q4lJ4c4gIIfYqAXgqhLgCrgGVMcZ4Hoj3gBvAKqX0sVLq0xjjZyAN0J+I4APgGLgD0kqpBWAOuAceAGvGmGtrrX0J3gJujDEfAUuU0gPgEkgBtwBrjHm01t76JgE+CiFOgHPg0FqbAt6ste+Am7Gx8wfg1Fr7DrgG0taaBGAduAQS1tr3wA2QBm4BIUSCMebBWrsPXAP3QBo4A5JAAngA7q21b4EbIG2McQK4Ah6B1L8EcAK8APfW2m3gGngwxiSBK+DWWrsKXAP3xpgE8Ag8Wmsf/RLwG3gG7q21m8A1cGeMSQJPwL21dgO4AW6NMSngCbi31m4AV8CNtTYFPAP31toN4Bq4M8YkgSfg3lq7DlwBN9baFPAE3Ftr14Ar4NZamwKegHtr7TpwBdxYa1PAM3BvrV0HLoEba20KeALurbXrwCVwY61NAU/AvbV2HbgEbqy1KeAZuLfWrgOXwI21NgU8A/fW2nXgErjxTQJ8BO6ttWvAJXDjmwT4CNxba9eAS+DGi/gPfgNJa9vF1Yv6JAAAAABJRU5ErkJggg==">
+    <title>Legacy Pac-Man</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            background: #07091C;
+            overflow: hidden;
+            touch-action: none;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            user-select: none;
+            /* Subtle radial gradient background */
+            background-image: radial-gradient(ellipse at center, #0D1035 0%, #07091C 60%, #030308 100%);
+        }
+
+        #game-container {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+        }
+
+        canvas {
+            display: block;
+            /* No pixel-art rendering — allow browser anti-aliasing for smooth circles */
+            image-rendering: auto;
+            /* Subtle outer glow on the canvas */
+            filter: drop-shadow(0 0 20px rgba(43, 91, 255, 0.4)) drop-shadow(0 0 40px rgba(43, 91, 255, 0.15));
+        }
+
+        /* ── CRT scanline + vignette overlay ──────────────────────────
+           Sits on top of the canvas, pointer-events: none so it never
+           intercepts clicks/touches. Opacity kept low (12%) so it
+           adds texture without muddying colours.                       */
+        #crt-overlay {
+            position        : absolute;
+            inset           : 0;
+            pointer-events  : none;
+            z-index         : 10;
+            display         : none; /* controlled by SettingsManager.applyAll() */
+            /* Horizontal scanlines: alternating transparent / semi-black rows */
+            background-image: repeating-linear-gradient(
+                0deg,
+                transparent,
+                transparent 1px,
+                rgba(0, 0, 0, 0.08) 1px,
+                rgba(0, 0, 0, 0.08) 2px
+            ),
+            /* Radial vignette — darkens the four corners */
+            radial-gradient(
+                ellipse at center,
+                transparent 55%,
+                rgba(0, 0, 0, 0.45) 100%
+            );
+        }
+
+        /* Font preload helper - forces browser to load font */
+        .font-preload {
+            font-family: 'Press Start 2P', monospace;
+            position: absolute;
+            top: -9999px;
+            left: -9999px;
+            opacity: 0;
+            pointer-events: none;
+        }
+    </style>
+  <script type="module" crossorigin src="/assets/index-Cguy-jTl.js"></script>
+  <link rel="modulepreload" crossorigin href="/assets/phaser-BlNqK--e.js">
+</head>
+<body>
+    <!-- Font preload trick so font is ready before Phaser renders text -->
+    <div class="font-preload" aria-hidden="true">.</div>
+    <div id="game-container"></div>
+    <div id="crt-overlay" aria-hidden="true"></div>
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js')
+                    .then(reg => console.log('SW registered:', reg.scope))
+                    .catch(err => console.log('SW registration failed:', err));
+            });
+        }
+    </script>
+</body>
+</html>

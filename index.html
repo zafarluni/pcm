@@ -8,7 +8,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Pac-Man">
-    <link rel="manifest" href="/assets/manifest-BItekTGg.json">
+    <link rel="manifest" href="/pcm/manifest.json">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
@@ -87,8 +87,8 @@
             pointer-events: none;
         }
     </style>
-  <script type="module" crossorigin src="/assets/index-Cguy-jTl.js"></script>
-  <link rel="modulepreload" crossorigin href="/assets/phaser-BlNqK--e.js">
+  <script type="module" crossorigin src="/pcm/assets/index-Cguy-jTl.js"></script>
+  <link rel="modulepreload" crossorigin href="/pcm/assets/phaser-BlNqK--e.js">
 </head>
 <body>
     <!-- Font preload trick so font is ready before Phaser renders text -->
@@ -98,7 +98,7 @@
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('sw.js')
+                navigator.serviceWorker.register('/pcm/sw.js')
                     .then(reg => console.log('SW registered:', reg.scope))
                     .catch(err => console.log('SW registration failed:', err));
             });

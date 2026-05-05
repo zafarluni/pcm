@@ -1,4 +1,4 @@
-const CACHE_NAME = 'legacy-pacman-v9';
+const CACHE_NAME = 'legacy-pacman-v0.0.1';
 
 self.addEventListener('install', (event) => {
     event.waitUntil(

@@ -1,8 +1,9 @@
 {
-    "name": "Legacy Pac-Man",
-    "short_name": "Pac-Man",
-    "description": "A retro arcade Pac-Man experience - 100% offline, ad-free",
-    "start_url": "/",
+    "name": "Dudo's Pacman",
+    "short_name": "Dudo's Pacman",
+    "id": "/pcm/",
+    "description": "A retro arcade Dudo's Pacman experience - 100% offline, ad-free",
+    "start_url": "/pcm/",
     "display": "standalone",
     "orientation": "portrait",
     "background_color": "#000000",
@@ -10,16 +11,16 @@
     "categories": ["games", "entertainment"],
     "icons": [
         {
-            "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'%3E%3Crect fill='%23000' width='192' height='192'/%3E%3Ccircle cx='96' cy='96' r='70' fill='%23FFD700'/%3E%3Cpath d='M96 96 L96 50 A46 46 0 0 1 130 70 Z' fill='%23000'/%3E%3Ccircle cx='70' cy='80' r='8' fill='%23000'/%3E%3Ccircle cx='122' cy='80' r='8' fill='%23000'/%3E%3C/svg%3E",
+            "src": "icon-192.png",
             "sizes": "192x192",
-            "type": "image/svg+xml",
-            "purpose": "any maskable"
+            "type": "image/png",
+            "purpose": "any"
         },
         {
-            "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect fill='%23000' width='512' height='512'/%3E%3Ccircle cx='256' cy='256' r='180' fill='%23FFD700'/%3E%3Cpath d='M256 256 L256 120 A136 136 0 0 1 340 180 Z' fill='%23000'/%3E%3Ccircle cx='190' cy='220' r='20' fill='%23000'/%3E%3Ccircle cx='322' cy='220' r='20' fill='%23000'/%3E%3C/svg%3E",
+            "src": "icon-512.png",
             "sizes": "512x512",
-            "type": "image/svg+xml",
-            "purpose": "any maskable"
+            "type": "image/png",
+            "purpose": "any"
         }
     ],
     "screenshots": [],
@@ -27,7 +28,7 @@
     "prefer_related_applications": false,
     "lang": "en",
     "dir": "ltr",
-    "scope": "/",
+    "scope": "/pcm/",
     "update_url": "https://github.com/pages/",
     "version": "1.0.0"
 }

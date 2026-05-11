@@ -1,4 +1,4 @@
-const CACHE_NAME = 'legacy-pacman-v0.0.1';
+const CACHE_NAME = 'dudos-pacman-v0.0.6';
 
 self.addEventListener('install', (event) => {
     event.waitUntil(
@@ -8,7 +8,9 @@ self.addEventListener('install', (event) => {
                 return cache.addAll([
                     '/pcm/',
                     '/pcm/index.html',
-                    '/pcm/manifest.json'
+                    '/pcm/manifest.json',
+                    '/pcm/icon-192.png',
+                    '/pcm/icon-512.png'
                 ]);
             })
             .then(() => {
@@ -40,6 +42,25 @@ self.addEventListener('activate', (event) => {
 
 self.addEventListener('fetch', (event) => {
     const url = new URL(event.request.url);
+
+    if (event.request.mode === 'navigate') {
+        event.respondWith(
+            fetch(event.request)
+                .then((networkResponse) => {
+                    if (networkResponse && networkResponse.status === 200) {
+                        const responseClone = networkResponse.clone();
+                        caches.open(CACHE_NAME)
+                            .then((cache) => {
+                                cache.put(event.request, responseClone);
+                            });
+                    }
+                    return networkResponse;
+                })
+                .catch(() => caches.match(event.request))
+                .then((cachedOrNetwork) => cachedOrNetwork || caches.match('/pcm/index.html'))
+        );
+        return;
+    }
 
     if (url.origin === location.origin) {
         event.respondWith(

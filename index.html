@@ -4,16 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#07091C">
-    <meta name="description" content="Legacy Pac-Man - A retro arcade experience">
+    <meta name="description" content="Dudo's Pacman - A retro arcade experience">
+    <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="Pac-Man">
+    <meta name="apple-mobile-web-app-title" content="Dudo's Pacman">
     <link rel="manifest" href="/pcm/manifest.json">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAA7AAAAOwBeShxvQAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAGRSURBVFiF7ZY9TsMwGIafO0pqYGJgYGRkYuQNeAbegrEz38Ab8A68AW/AyMgL0NhYWRgYEhK0TYrEdRzHQeLQuE5S6CRKkeNc9u/+O44b/xgK4K0Q4lJ4c4gIIfYqAXgqhLgCrgGVMcZ4Hoj3gBvAKqX0sVLq0xjjZyAN0J+I4APgGLgD0kqpBWAOuAceAGvGmGtrrX0J3gJujDEfAUuU0gPgEkgBtwBrjHm01t76JgE+CiFOgHPg0FqbAt6ste+Am7Gx8wfg1Fr7DrgG0taaBGAduAQS1tr3wA2QBm4BIUSCMebBWrsPXAP3QBo4A5JAAngA7q21b4EbIG2McQK4Ah6B1L8EcAK8APfW2m3gGngwxiSBK+DWWrsKXAP3xpgE8Ag8Wmsf/RLwG3gG7q21m8A1cGeMSQJPwL21dgO4AW6NMSngCbi31m4AV8CNtTYFPAP31toN4Bq4M8YkgSfg3lq7DlwBN9baFPAE3Ftr14Ar4NZamwKegHtr7TpwBdxYa1PAM3BvrV0HLoEba20KeALurbXrwCVwY61NAU/AvbV2HbgEbqy1KeAZuLfWrgOXwI21NgU8A/fW2nXgErjxTQJ8BO6ttWvAJXDjmwT4CNxba9eAS+DGi/gPfgNJa9vF1Yv6JAAAAABJRU5ErkJggg==">
-    <title>Legacy Pac-Man</title>
+    <title>Dudo's Pacman</title>
     <style>
         * {
             margin: 0;
@@ -41,6 +42,74 @@
             display: flex;
             align-items: flex-start;
             justify-content: center;
+        }
+
+        #install-btn {
+            position: fixed;
+            left: auto;
+            right: max(24px, calc(50% - 336px + 24px));
+            bottom: calc(105px + env(safe-area-inset-bottom, 0px));
+            transform: none;
+            z-index: 99999;
+            border: none;
+            border-radius: 0;
+            min-width: 0;
+            width: 52px;
+            height: 52px;
+            padding: 0;
+            background: transparent;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            box-shadow: none;
+            transition: transform 120ms ease, filter 120ms ease, opacity 120ms ease;
+            opacity: 0.7;
+        }
+
+        #install-btn[style*='display: block'] {
+            display: inline-flex !important;
+        }
+
+        #install-btn .install-icon {
+            width: 44px;
+            height: 44px;
+            object-fit: contain;
+            image-rendering: auto;
+            display: block;
+            pointer-events: none;
+            filter: drop-shadow(0 0 4px rgba(0, 190, 255, 0.2));
+        }
+
+        #install-btn:hover,
+        #install-btn:focus-visible {
+            filter: brightness(1.12);
+            outline: none;
+            opacity: 1;
+            transform: scale(1.03);
+        }
+
+        #install-btn:active {
+            transform: translateY(1px) scale(0.98);
+        }
+
+        @media (max-width: 520px) {
+            #install-btn {
+                bottom: calc(95px + env(safe-area-inset-bottom, 0px));
+                right: calc(16px + env(safe-area-inset-right, 0px));
+                width: 50px;
+                height: 50px;
+                padding: 0;
+            }
+
+            #install-btn .install-icon {
+                width: 42px;
+                height: 42px;
+            }
+
+            #install-btn:active {
+                transform: translateY(1px) scale(0.98);
+            }
         }
 
         canvas {
@@ -87,7 +156,7 @@
             pointer-events: none;
         }
     </style>
-  <script type="module" crossorigin src="/pcm/assets/index-Dv5Z-4aZ.js"></script>
+  <script type="module" crossorigin src="/pcm/assets/index-CAZo37m1.js"></script>
   <link rel="modulepreload" crossorigin href="/pcm/assets/phaser-BlNqK--e.js">
 </head>
 <body>
@@ -95,14 +164,8 @@
     <div class="font-preload" aria-hidden="true">.</div>
     <div id="game-container"></div>
     <div id="crt-overlay" aria-hidden="true"></div>
-    <script>
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/pcm/sw.js')
-                    .then(reg => console.log('SW registered:', reg.scope))
-                    .catch(err => console.log('SW registration failed:', err));
-            });
-        }
-    </script>
+    <button id="install-btn" type="button" aria-label="Install app" title="Install app">
+        <img class="install-icon" src="install.png" alt="" aria-hidden="true">
+    </button>
 </body>
 </html>

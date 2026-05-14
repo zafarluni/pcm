@@ -44,73 +44,6 @@
             justify-content: center;
         }
 
-        #install-btn {
-            position: fixed;
-            left: auto;
-            right: max(24px, calc(50% - 336px + 24px));
-            bottom: calc(105px + env(safe-area-inset-bottom, 0px));
-            transform: none;
-            z-index: 99999;
-            border: none;
-            border-radius: 0;
-            min-width: 0;
-            width: 52px;
-            height: 52px;
-            padding: 0;
-            background: transparent;
-            cursor: pointer;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            box-shadow: none;
-            transition: transform 120ms ease, filter 120ms ease, opacity 120ms ease;
-            opacity: 0.7;
-        }
-
-        #install-btn[style*='display: block'] {
-            display: inline-flex !important;
-        }
-
-        #install-btn .install-icon {
-            width: 44px;
-            height: 44px;
-            object-fit: contain;
-            image-rendering: auto;
-            display: block;
-            pointer-events: none;
-            filter: drop-shadow(0 0 4px rgba(0, 190, 255, 0.2));
-        }
-
-        #install-btn:hover,
-        #install-btn:focus-visible {
-            filter: brightness(1.12);
-            outline: none;
-            opacity: 1;
-            transform: scale(1.03);
-        }
-
-        #install-btn:active {
-            transform: translateY(1px) scale(0.98);
-        }
-
-        @media (max-width: 520px) {
-            #install-btn {
-                bottom: calc(95px + env(safe-area-inset-bottom, 0px));
-                right: calc(16px + env(safe-area-inset-right, 0px));
-                width: 50px;
-                height: 50px;
-                padding: 0;
-            }
-
-            #install-btn .install-icon {
-                width: 42px;
-                height: 42px;
-            }
-
-            #install-btn:active {
-                transform: translateY(1px) scale(0.98);
-            }
-        }
 
         canvas {
             display: block;
@@ -156,7 +89,7 @@
             pointer-events: none;
         }
     </style>
-  <script type="module" crossorigin src="/pcm/assets/index-Cc0VHcfo.js"></script>
+  <script type="module" crossorigin src="/pcm/assets/index-BcAIHPGI.js"></script>
   <link rel="modulepreload" crossorigin href="/pcm/assets/phaser-BlNqK--e.js">
 </head>
 <body>
@@ -164,8 +97,5 @@
     <div class="font-preload" aria-hidden="true">.</div>
     <div id="game-container"></div>
     <div id="crt-overlay" aria-hidden="true"></div>
-    <button id="install-btn" type="button" aria-label="Install app" title="Install app">
-        <img class="install-icon" src="install.png" alt="" aria-hidden="true">
-    </button>
 </body>
 </html>

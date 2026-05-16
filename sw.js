@@ -1,6 +1,14 @@
 const CACHE_NAME = 'dudos-pacman-v0.0.6';
+const IS_LOCAL_DEV = self.location.hostname === 'localhost' ||
+    self.location.hostname === '127.0.0.1' ||
+    self.location.hostname === '[::1]';
 
 self.addEventListener('install', (event) => {
+    if (IS_LOCAL_DEV) {
+        event.waitUntil(self.skipWaiting());
+        return;
+    }
+
     event.waitUntil(
         caches.open(CACHE_NAME)
             .then((cache) => {
@@ -24,6 +32,16 @@ self.addEventListener('install', (event) => {
 });
 
 self.addEventListener('activate', (event) => {
+    if (IS_LOCAL_DEV) {
+        event.waitUntil(
+            caches.keys()
+                .then((cacheNames) => Promise.all(cacheNames.map((name) => caches.delete(name))))
+                .then(() => self.registration.unregister())
+                .then(() => self.clients.claim())
+        );
+        return;
+    }
+
     event.waitUntil(
         caches.keys()
             .then((cacheNames) => {
@@ -41,6 +59,8 @@ self.addEventListener('activate', (event) => {
 });
 
 self.addEventListener('fetch', (event) => {
+    if (IS_LOCAL_DEV) return;
+
     const url = new URL(event.request.url);
 
     if (event.request.mode === 'navigate') {
@@ -85,6 +105,7 @@ self.addEventListener('fetch', (event) => {
                     if (event.request.destination === 'document') {
                         return caches.match('/pcm/index.html');
                     }
+                    return Response.error();
                 })
         );
     }
